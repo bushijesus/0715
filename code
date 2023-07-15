@@ -1,0 +1,142 @@
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+using namespace std;
+class Person {
+public:
+	void Set(string name, int age) {
+		this->Name = name;
+		this->Age = age;
+	}
+	void Show() {
+		cout << "姓名：" << this->Name << endl << "年龄： " << this->Age << endl;
+	}
+private:
+	string Name;
+	int Age;
+};
+
+void test() {
+	Person p1;
+	p1.Set("张鑫", 65);
+	p1.Show();
+
+	/*Person p[3];
+	char set_name[50] = "";
+	int set_age = 0;
+	for (int i = 0; i < 3; ++i)
+	{
+		cin >> set_name >> set_age;
+		p[i].Set(set_name, set_age);
+		p[i].Show();
+	}*/
+
+	/*Person * ptr = new Person;
+	ptr->Set("对对对", 6);
+	ptr->Show();
+	delete ptr;*/
+
+	Person * parr = new Person[2];
+	char set_name[2][50] = {"BAGA", "GABA"};
+	int set_age[2] = { 25,52 };
+	for (int i = 0; i < 2; ++i) {
+
+// 		parr[i].Set(set_name, set_age);
+// 		parr[i].Show();
+
+		(parr + i)->Set(set_name[i], set_age[i]);
+		(parr + i)->Show();
+	}
+	delete[]parr;
+}
+
+class Animal {
+public:
+	void Set(string name,string kind) {
+		this->Name = name;
+		this->Kind = kind;
+	}
+	void Eat(string food) {
+		cout << this->Kind << this->Name << "吃" << food << endl;
+	}
+private:
+	string Name;
+	string Kind;
+};
+
+void testt() {
+	Animal a1;
+	a1.Set("猫", "猫科");
+	a1.Eat("鱼");
+	a1.Eat("猫粮");
+}
+int main() {
+	testt();
+	return 0;
+}
+// 0715.cpp : 定义控制台应用程序的入口点。
+//
+
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+using namespace std;
+
+// 类模板与继承
+template<class T>
+class Base {
+	T m;
+};
+template <class T1, class T2>
+class Son2 :public Base<T2> {
+public:
+	Son2() {
+		cout << "T1的类型： " << typeid(T1).name() << endl;
+		cout << "T2的类型： " << typeid(T2).name() << endl;
+	}
+	T1 n;
+};
+void test02() {
+	Son2<int, char> s2;
+}
+class Son :public Base<int> {  // 必须指定父类中的 T 的类型，才能继承给子类
+
+};
+void test01() {
+	Son s1;
+}
+
+template<class T1, class T2>
+class Person {
+public:
+	Person(T1 name, T2 age);
+	void showPerson();
+public:
+	T1 Name;
+	T2 Age;
+};
+
+// 构造函数的类外实现
+template<class T1, class T2>
+Person<T1, T2>::Person(T1 name, T2 age) {
+	this->Name = name;
+	this->Age = age;
+}
+
+// 成员函数类外实现
+template<class T1, class T2>
+void Person<T1, T2>::showPerson() {
+	cout << "姓名： " << this->Name << endl;
+	cout << "年龄： " << this->Age << endl;
+}
+
+void test03() {
+	Person<string, int> p1("lubenwei", 25);
+	p1.showPerson();
+}
+// int main()
+// {
+// 	test03();
+//     return 0;
+// }
+
